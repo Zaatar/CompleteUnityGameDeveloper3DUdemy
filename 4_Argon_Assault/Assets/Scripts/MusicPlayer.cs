@@ -1,19 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement; 
 
 public class MusicPlayer : MonoBehaviour {
     void Awake() 
     {
-        DontDestroyOnLoad(this.gameObject);
-    }
-    void Start()
-    {
-        Invoke("LoadFirstScene", 2f);
-    }
-
-    void LoadFirstScene() {
-        SceneManager.LoadScene(1);
+        int numberOfMusicPlayers = FindObjectsOfType<MusicPlayer>().Length;
+        if(numberOfMusicPlayers > 1)
+        {
+            Destroy(gameObject);
+        } else
+        {
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
 }

@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+
+    //todo work out why sometimes it's slow on first scene playthrough
+    [Header("General")]
     [Tooltip("In m/s")][SerializeField] float xSpeed = 4f;
     [Tooltip("In m/s")][SerializeField] float ySpeed = 4f;
     [Tooltip("In m")] [SerializeField] float xRange = 6f;
     [Tooltip("In m")] [SerializeField] float yRange = 7f;
+    [SerializeField] GameObject[] Guns;
+
+    [Header("Screen-position based")]
     [SerializeField] float positionPitchFactor = -2.5f;
     [SerializeField] float positionYawFactor = 2.5f;
+
+    [Header("Control-throw based")]
     [SerializeField] float controlPitchFactor = -5f;
     [SerializeField] float controlRollFactor = -10f;
     float xThrow, yThrow;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    bool isControlEnabled = true;
+    bool isFiring = true;
 
-    // Update is called once per frame
     void Update()
     {
-        ProcessTranslation();
-        ProcessRotation();
+        if (isControlEnabled)
+        {
+            ProcessTranslation();
+            ProcessRotation();
+            ProcessFiring();
+        }
     }
 
     void ProcessTranslation()
@@ -50,5 +58,37 @@ public class Player : MonoBehaviour
         float yaw = transform.localPosition.x * positionYawFactor;
         float roll = xThrow * controlRollFactor;
         transform.localRotation = Quaternion.Euler(pitch, yaw, roll);
+    }
+
+    void ProcessFiring()
+    {
+        if (CrossPlatformInputManager.GetButton("Fire"))
+        {
+            ActivateGuns();
+        } else
+        {
+            DeactivateGuns();
+        }
+    }
+
+    void ActivateGuns()
+    {
+        foreach (GameObject gun in Guns)
+        {
+            gun.SetActive(true);
+        }
+    }
+
+    void DeactivateGuns()
+    {
+        foreach(GameObject gun in Guns)
+        {
+            gun.SetActive(false);
+        }
+    }
+
+    void OnPlayerDeath() //called by string reference
+    {
+        isControlEnabled = false;
     }
 }
