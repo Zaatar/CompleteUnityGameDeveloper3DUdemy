@@ -23,7 +23,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float controlRollFactor = -10f;
     float xThrow, yThrow;
     bool isControlEnabled = true;
-    bool isFiring = true;
 
     void Update()
     {
