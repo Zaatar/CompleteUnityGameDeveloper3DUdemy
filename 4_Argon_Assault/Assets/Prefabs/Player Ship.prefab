@@ -322,6 +322,7 @@ MonoBehaviour:
   ySpeed: 50
   xRange: 12
   yRange: 12
+  Guns: []
   positionPitchFactor: -2
   positionYawFactor: 2.5
   controlPitchFactor: -15
