@@ -7,7 +7,9 @@ public class Pathfinder : MonoBehaviour
     Dictionary<Vector2Int, Waypoint> grid = new Dictionary<Vector2Int, Waypoint>();
     [SerializeField] Waypoint start;
     [SerializeField] Waypoint end;
-    Waypoint currentLocation;
+    Queue<Waypoint> waypointQueue = new Queue<Waypoint>();
+    bool isPathFinderRunning = true;
+
     Vector2Int[] directions =
     {
         Vector2Int.up,
@@ -20,7 +22,7 @@ public class Pathfinder : MonoBehaviour
     {
         LoadBlocks();
         ColorCoreWaypoints();
-        currentLocation = start;
+        PathFind();
     }
 
     private void ColorCoreWaypoints()
@@ -29,15 +31,43 @@ public class Pathfinder : MonoBehaviour
         end.SetTopColor(Color.red);
     }
 
-    private void ExploreNeighbours()
+    private void PathFind()
     {
-        foreach(Vector2Int direction in directions)
+        waypointQueue.Enqueue(start);
+        while(waypointQueue.Count > 0 && isPathFinderRunning)
         {
-            Waypoint neighborCell;
-            Vector2Int neighbor = currentLocation.GetGridPos() + direction;
-            if (grid.TryGetValue(neighbor, out neighborCell))
+            Waypoint searchCenter = waypointQueue.Dequeue();
+            searchCenter.isExplored = true;
+            if(searchCenter == end)
             {
-                neighborCell.SetTopColor(Color.cyan);
+                isPathFinderRunning = false;
+                Debug.Log("At end point stopping search");
+            }
+            ExploreNeighbours(searchCenter);
+        }
+    }
+
+    private void ExploreNeighbours(Waypoint from)
+    {
+        if (isPathFinderRunning)
+        {
+            foreach (Vector2Int direction in directions)
+            {
+                QueueNewNeighbours(from, direction);
+            }
+        }
+    }
+
+    private void QueueNewNeighbours(Waypoint from, Vector2Int direction)
+    {
+        Vector2Int neighbor = from.GetGridPos() + direction;
+        if (grid.TryGetValue(neighbor, out Waypoint neighborCell))
+        {
+            neighborCell.SetTopColor(Color.cyan);
+            if (!neighborCell.isExplored && !waypointQueue.Contains(neighborCell))
+            {
+                waypointQueue.Enqueue(neighborCell);
+                Debug.Log("Queueing waypoint at : " + neighborCell.name);
             }
         }
     }
@@ -55,9 +85,8 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        ExploreNeighbours();
+//        PathFind();
     }
 }
