@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Waypoint : MonoBehaviour
 {
+    [SerializeField] Color exploredCellColor = Color.blue;
     public bool isExplored = false;
+    public Waypoint exploredFrom;
     const int gridSize = 10;
 
     public int GetGridSize()
@@ -24,5 +26,11 @@ public class Waypoint : MonoBehaviour
     {
         MeshRenderer topMeshRenderer = transform.Find("Top").GetComponent<MeshRenderer>();
         topMeshRenderer.material.color = color;
+    }
+
+    public void Update()
+    {
+        if (isExplored)
+            SetTopColor(exploredCellColor);
     }
 }
