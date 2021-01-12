@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     List<Waypoint> path;
+
     void Start()
     {
         Pathfinder pathfinder = FindObjectOfType<Pathfinder>();
