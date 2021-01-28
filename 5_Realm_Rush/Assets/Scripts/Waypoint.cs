@@ -41,6 +41,5 @@ public class Waypoint : MonoBehaviour
             print(gameObject.name + " clicked.");
         }
         Debug.Log("Enter " + gameObject.name);
-        print("Mouse Hover");
     }
 }
