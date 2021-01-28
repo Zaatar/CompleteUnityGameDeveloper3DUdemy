@@ -33,4 +33,14 @@ public class Waypoint : MonoBehaviour
         if (isExplored)
             SetTopColor(exploredCellColor);
     }
+
+    public void OnMouseOver()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            print(gameObject.name + " clicked.");
+        }
+        Debug.Log("Enter " + gameObject.name);
+        print("Mouse Hover");
+    }
 }

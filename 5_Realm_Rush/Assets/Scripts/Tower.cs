@@ -22,16 +22,13 @@ public class Tower : MonoBehaviour
     void ShootEnemy()
     {
         float distanceTowardsEnemy = 100f;
-        print("Initializing distance towards enemy " + distanceTowardsEnemy);
         distanceTowardsEnemy = Vector3.Distance(gameObject.transform.position, targetEnemy.position);
         if (distanceTowardsEnemy <= shootingRange)
         {
-            print("Should Shoot");
             Shoot(true);
         }
         else
         {
-            print("Should stop shooting");
             Shoot(false);
         }
     }
