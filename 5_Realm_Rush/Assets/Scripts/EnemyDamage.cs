@@ -6,7 +6,6 @@ public class EnemyDamage : MonoBehaviour
 {
     int scorePerHit = 1;
     int hits = 3;
-    // Start is called before the first frame update
     void Start()
     {
         //AddNonTriggerBoxCollider();
@@ -27,13 +26,11 @@ public class EnemyDamage : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        print("Dead");
         ProcessHit();
     }
 
     void ProcessHit()
     {
-        print("Entering Process hit");
         hits -= scorePerHit;
         if (hits <= 0)
         {
@@ -43,7 +40,6 @@ public class EnemyDamage : MonoBehaviour
 
     void KillEnemy()
     {
-        print("Entering kill enemy");
         Destroy(gameObject);
     }
 }

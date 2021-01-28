@@ -95,12 +95,17 @@ public class Pathfinder : MonoBehaviour
     {
         if(path.Count == 0)
         {
-            LoadBlocks();
-            ColorCoreWaypoints();
-            BreadthFirstSearch();
-            CreatePath();
+            CalculatePath();
         }
         return path;
+    }
+
+    private void CalculatePath()
+    {
+        LoadBlocks();
+        ColorCoreWaypoints();
+        BreadthFirstSearch();
+        CreatePath();
     }
 
     void Update()
