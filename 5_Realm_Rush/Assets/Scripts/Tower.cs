@@ -14,6 +14,8 @@ public class Tower : MonoBehaviour
 
     //State
     Transform targetEnemy;
+    public Waypoint baseWaypoint;
+    
     void PanTowardsEnemy()
     {
         objectToPan.transform.LookAt(targetEnemy);

@@ -45,7 +45,8 @@ public class EnemyDamage : MonoBehaviour
     {
         ParticleSystem death = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
         death.Play();
+        float deathTimer = death.main.duration;
+        Destroy(death.gameObject, deathTimer);
         Destroy(gameObject);
-        Destroy(death);
     }
 }
