@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     List<Waypoint> path;
+    [SerializeField] float movementPeriod = 0.5f;
+    [SerializeField] ParticleSystem explosionParticle;
 
     void Start()
     {
@@ -18,12 +20,17 @@ public class EnemyMovement : MonoBehaviour
         foreach (Waypoint waypoint in path)
         {
             transform.position = waypoint.transform.position;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(movementPeriod);
         }
+        SelfDestruct();
     }
 
-    void Update()
+    void SelfDestruct()
     {
-
+        ParticleSystem explosion = Instantiate(explosionParticle, transform.position, Quaternion.identity);
+        explosion.Play();
+        float deathTimer = explosion.main.duration;
+        Destroy(explosion.gameObject, deathTimer);
+        Destroy(gameObject);
     }
 }
