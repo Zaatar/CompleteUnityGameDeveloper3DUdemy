@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyDamage : MonoBehaviour
 {
+    [SerializeField] ParticleSystem hitParticlePrefab;
+    [SerializeField] ParticleSystem deathParticlePrefab;
     int scorePerHit = 1;
     int hits = 3;
     void Start()
@@ -32,6 +34,7 @@ public class EnemyDamage : MonoBehaviour
     void ProcessHit()
     {
         hits -= scorePerHit;
+        hitParticlePrefab.Play();
         if (hits <= 0)
         {
             KillEnemy();
@@ -40,6 +43,11 @@ public class EnemyDamage : MonoBehaviour
 
     void KillEnemy()
     {
+        ParticleSystem death = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
+        print("Instantiated");
+        death.Play();
+        print("Playing");
         Destroy(gameObject);
+        Destroy(death);
     }
 }
