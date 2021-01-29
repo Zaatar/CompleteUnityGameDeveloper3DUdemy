@@ -44,9 +44,7 @@ public class EnemyDamage : MonoBehaviour
     void KillEnemy()
     {
         ParticleSystem death = Instantiate(deathParticlePrefab, transform.position, Quaternion.identity);
-        print("Instantiated");
         death.Play();
-        print("Playing");
         Destroy(gameObject);
         Destroy(death);
     }

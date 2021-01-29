@@ -5,7 +5,6 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour
 {
     [SerializeField] Color exploredCellColor = Color.blue;
-    [SerializeField] Tower towerPrefab;
     public bool isExplored = false;
     public bool isPlaceable = true;
     public Waypoint exploredFrom;
@@ -40,7 +39,7 @@ public class Waypoint : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && isPlaceable)
         {
-            Instantiate(towerPrefab, gameObject.transform.position, Quaternion.identity);
+            FindObjectOfType<TowerFactory>().AddTower(this);
             Waypoint gameObjectWaypoint = gameObject.GetComponent<Waypoint>();
             gameObjectWaypoint.isPlaceable = false;
         }
