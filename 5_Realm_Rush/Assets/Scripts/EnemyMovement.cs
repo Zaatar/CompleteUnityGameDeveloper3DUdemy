@@ -27,10 +27,15 @@ public class EnemyMovement : MonoBehaviour
 
     void SelfDestruct()
     {
+        PlayExplosionParticleSystem();
+        Destroy(gameObject);
+    }
+
+    private void PlayExplosionParticleSystem()
+    {
         ParticleSystem explosion = Instantiate(explosionParticle, transform.position, Quaternion.identity);
         explosion.Play();
         float deathTimer = explosion.main.duration;
         Destroy(explosion.gameObject, deathTimer);
-        Destroy(gameObject);
     }
 }
